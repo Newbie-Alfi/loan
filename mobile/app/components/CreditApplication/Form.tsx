@@ -13,7 +13,7 @@ import {
 } from "@gluestack-ui/themed";
 
 import { ACTION_TYPE, State, reducer } from "./reducer";
-import { InputNumber } from "../InputNumber";
+import { InputNumber } from "../../../components/InputNumber";
 
 const DEFAULT_VALUE: State = {
   age: 18,
