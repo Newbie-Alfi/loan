@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { StyleSheet } from "react-native";
 import { Button, ButtonText, Text, VStack, FormControl, InputField, Input } from "@gluestack-ui/themed";
 
 export function SignInForm() {

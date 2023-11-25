@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ISignInResponse } from "./models";
-import { BACKEND_URL } from "../constants";
+import { AUTH_BACKEND_URL } from "../constants";
 import { tokenStorage } from "./tokenStorage";
 
 interface ISignUpRequest {
@@ -12,7 +12,7 @@ interface ISignUpRequest {
 
 function initAuth() {
   const api = axios.create({
-    baseURL: BACKEND_URL + "api/v1/",
+    baseURL: AUTH_BACKEND_URL + "api/v1/",
   });
 
   async function singIn(username: string, password: string) {
