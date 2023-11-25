@@ -1,15 +1,26 @@
 import { useState } from "react";
 import { Button, ButtonText, Text, VStack, FormControl, InputField, Input } from "@gluestack-ui/themed";
+import { auth } from "../../../api/auth";
+import { useRouter } from "expo-router";
 
 export function SignInForm() {
-  const [username, setUsername] = useState<string>();
-  const [password, setPassword] = useState<string>();
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const router = useRouter();
 
-  function onSubmit() {
-    console.log(username);
-    console.log(password);
-    setUsername("");
-    setPassword("");
+  async function onSubmit() {
+    setLoading(true);
+
+    const res = await auth.singIn(username, password);
+
+    if (res.status === 200) {
+      setUsername("");
+      setPassword("");
+      setLoading(false);
+
+      router.replace("/(tabs)");
+    }
   }
 
   return (
@@ -39,11 +50,17 @@ export function SignInForm() {
             Пароль
           </Text>
           <Input>
-            <InputField type="text" value={password} onChangeText={(value) => setPassword(value)} />
+            <InputField type="password" value={password} onChangeText={(value) => setPassword(value)} />
           </Input>
         </VStack>
-        <Button width="100%" ml="auto" onPress={onSubmit}>
-          <ButtonText color="$white">Войти</ButtonText>
+        <Button
+          width="100%"
+          ml="auto"
+          onPress={onSubmit}
+          disabled={loading}
+          backgroundColor={loading ? "$blueGray400" : "$darkBlue500"}
+        >
+          <ButtonText color="$white">{loading ? "Загрузка..." : "Войти"}</ButtonText>
         </Button>
       </VStack>
     </FormControl>

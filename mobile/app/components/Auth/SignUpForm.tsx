@@ -1,18 +1,30 @@
 import { useState } from "react";
 import { Button, ButtonText, Text, VStack, FormControl, InputField, Input } from "@gluestack-ui/themed";
+import { auth } from "../../../api/auth";
+import { useRouter } from "expo-router";
 
 export function SignUpForm() {
   const [username, setUsername] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [confirmPassword, setConfirmPassword] = useState<string>("");
+  const [password2, setPassword2] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
 
-  function onSubmit() {
-    console.log(username);
-    console.log(password);
-    console.log(confirmPassword);
-    setUsername("");
-    setPassword("");
-    setConfirmPassword("");
+  const router = useRouter();
+
+  async function onSubmit() {
+    setLoading(true);
+    const res = await auth.singUp({ username, email, password, password2 });
+
+    if (res.status === 201) {
+      setUsername("");
+      setPassword("");
+      setEmail("");
+      setPassword2("");
+
+      setLoading(false);
+      router.replace("/(tabs)");
+    }
   }
 
   return (
@@ -39,10 +51,18 @@ export function SignUpForm() {
         </VStack>
         <VStack space="xs">
           <Text color="$textDark500" lineHeight="$xs">
+            Почта
+          </Text>
+          <Input>
+            <InputField type="text" value={email} onChangeText={(value) => setEmail(value)} />
+          </Input>
+        </VStack>
+        <VStack space="xs">
+          <Text color="$textDark500" lineHeight="$xs">
             Пароль
           </Text>
           <Input>
-            <InputField type="text" value={password} onChangeText={(value) => setPassword(value)} />
+            <InputField type="password" value={password} onChangeText={(value) => setPassword(value)} />
           </Input>
         </VStack>
         <VStack space="xs">
@@ -50,21 +70,19 @@ export function SignUpForm() {
             Подтверждение пароля
           </Text>
           <Input>
-            <InputField
-              type="text"
-              value={confirmPassword}
-              onChangeText={(value) => setConfirmPassword(value)}
-            />
+            <InputField type="password" value={password2} onChangeText={(value) => setPassword2(value)} />
           </Input>
         </VStack>
         <Button
           width="100%"
           ml="auto"
           onPress={onSubmit}
-          disabled={notValidPasswords(password, confirmPassword)}
-          backgroundColor={notValidPasswords(password, confirmPassword) ? "$blueGray400" : "$darkBlue500"}
+          disabled={notValidPasswords(password, password2) || loading}
+          backgroundColor={
+            notValidPasswords(password, password2) || loading ? "$blueGray400" : "$darkBlue500"
+          }
         >
-          <ButtonText color="$white">Зарегистрироваться</ButtonText>
+          <ButtonText color="$white">{loading ? "Загрузка..." : "Зарегистрироваться"}</ButtonText>
         </Button>
       </VStack>
     </FormControl>

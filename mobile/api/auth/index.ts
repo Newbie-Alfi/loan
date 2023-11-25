@@ -16,34 +16,17 @@ function initAuth() {
   });
 
   async function singIn(username: string, password: string) {
-    const data = new FormData();
-
-    data.set("username", username);
-    data.set("password", password);
-
-    const response = await api.post<ISignInResponse>(`sign-in/`, data);
+    const response = await api.post<ISignInResponse>(`sign-in/`, { username, password });
 
     await tokenStorage.setAccess(response.data.access);
     await tokenStorage.setRefresh(response.data.refresh);
+
+    return response;
   }
 
-  async function singUp({
-    username,
-    email,
-    password,
-    password2,
-  }: ISignUpRequest) {
-    const data = new FormData();
-
-    data.set("username", username);
-    data.set("email", email);
-    data.set("password", password);
-    data.set("password2", password2);
-
+  async function singUp(data: ISignUpRequest) {
     const response = await api.post<ISignInResponse>(`sign-up/`, data);
-
-    await tokenStorage.setAccess(response.data.access);
-    await tokenStorage.setRefresh(response.data.refresh);
+    return response;
   }
 
   async function refresh() {
