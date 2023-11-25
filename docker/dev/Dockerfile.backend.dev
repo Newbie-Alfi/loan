@@ -1,0 +1,19 @@
+FROM python:3.11.6 as builder
+
+ENV PYTHONUNBUFFERED 1
+
+WORKDIR /app
+
+RUN apt-get update -y && apt-get upgrade -y
+RUN pip install --upgrade pip
+RUN pip install pipenv
+
+COPY ./backend /app
+
+RUN cd /app
+RUN pipenv install --system --deploy --ignore-pipfile
+
+EXPOSE 8082
+
+CMD [ "python", "/app/src/manage.py", "runserver", "0.0.0.0:8082" ]
+
