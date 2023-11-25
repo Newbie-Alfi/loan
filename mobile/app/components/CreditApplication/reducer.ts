@@ -4,6 +4,7 @@ export interface State {
   occupation: string;
   monthly_inhand_salary: number;
   num_bank_accounts: number;
+  amount_invested_monthly: number;
   num_of_loan: number;
   num_credit_inquiries: number;
   credit_history_age: number;
@@ -22,6 +23,15 @@ export enum ACTION_TYPE {
   CREDIT_HISTORY_AGE = "CREDIT_HISTORY_AGE",
   PAYMENT_BEHAVIOUR = "PAYMENT_BEHAVIOUR",
   MONTHLY_BALANCE = "MONTHLY_BALANCE",
+}
+
+export enum PAYMENT_BEHAVIOR {
+  LOW_SPEND_SMALL_PAYMENTS = "Low_spent_Small_value_payments",
+  LOW_SPEND_MEDIUM_PAYMENTS = "Low_spent_Medium_value_payments",
+  LOW_SPEND_LARGE_PAYMENTS = "Low_spent_Large_value_payments",
+  HIGH_SPEND_SMALL_PAYMENTS = "High_spent_Small_value_payments",
+  HIGH_SPEND_MEDIUM_PAYMENTS = "High_spent_Medium_value_payments",
+  HIGH_SPEND_LARGE_PAYMENTS = "High_spent_Large_value_payments",
 }
 
 interface setAge {
@@ -119,6 +129,12 @@ export function reducer(state: State, action: Action): State {
       return { ...state, occupation: payload };
     }
     case ACTION_TYPE.PAYMENT_BEHAVIOUR: {
+      if (
+        !Object.values(PAYMENT_BEHAVIOR).includes(payload as PAYMENT_BEHAVIOR)
+      ) {
+        throw new Error("Invalid PAYMENT_BEHAVIOR");
+      }
+
       return { ...state, payment_behaviour: payload };
     }
     default: {
