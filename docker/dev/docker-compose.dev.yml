@@ -15,6 +15,15 @@ services:
     healthcheck:
       test: ["CMD", "pg_isready"]
       retries: 10
+  auth_server:
+    image: antimy/auth-server:0.2.0
+    restart: on-failure
+    env_file:
+      - docker/dev/.env
+    ports:
+      - 7000:7000
+    expose:
+      - 7000
   backend:
     build:
       context: .
