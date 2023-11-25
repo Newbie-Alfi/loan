@@ -16,7 +16,9 @@ export function InputNumber({ onChange, value, ...props }: InputNumberProps) {
   }, [value]);
 
   function onValueChange(v: string) {
-    let num = !!+v || +v === 0 ? +v : undefined;
+    let num = !!v ? +v : undefined;
+
+    num = num !== 0 && !num ? undefined : num;
 
     onChange(num);
   }
