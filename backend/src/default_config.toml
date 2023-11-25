@@ -1,0 +1,27 @@
+[base]
+secret_key = "insecure-tdh9c0e=7=e4x-m3rgas6om+$90!+@yve^e!xb-3$tdv6c%m=m"
+debug = true
+allowed_hosts = ["*"]
+script_name = ''
+csrf_trusted_origins = []
+environment = "local"
+
+[database]
+name = "credit_scoring"
+user = "postgres"
+password = "postgres"
+host = "172.17.0.2"
+port = 5432
+
+[timezone]
+name = "UTC"
+
+[storage]
+static_url = "/static/"
+media_url = "/media/"
+media_root = "cnd/media/"
+static_root = "cdn/static/"
+secure_links_secret = "insecure-mkjnhygtfdhgvjbknli"
+
+[i18n]
+language_code = 'en-en'

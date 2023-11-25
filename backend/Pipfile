@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "==4.2.7"
+django-split-settings = "==1.2.0"
+djangorestframework = "==3.14.0"
+celery = "==5.3.4"
+django-filter = "==23.3"
+pillow = "==10.1.0"
+psycopg2-binary = "==2.9.9"
+
+[dev-packages]
+redis = "*"
+black = "*"
+flake8 = "*"
+pre-commit = "*"
+pytest = "*"
+pytest-django = "*"
+faker = "*"
+factory-boy = "*"
+isort = "*"
+
+[requires]
+python_version = "3.11"
