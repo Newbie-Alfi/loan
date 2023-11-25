@@ -28,7 +28,7 @@ export function SignInForm() {
     >
       <VStack space="xl">
         <VStack space="xs">
-          <Text color="$text500" lineHeight="$xs">
+          <Text color="$textDark500" lineHeight="$xs">
             Логин
           </Text>
           <Input>
@@ -36,7 +36,7 @@ export function SignInForm() {
           </Input>
         </VStack>
         <VStack space="xs">
-          <Text color="$text500" lineHeight="$xs">
+          <Text color="$textDark500" lineHeight="$xs">
             Пароль
           </Text>
           <Input>

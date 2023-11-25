@@ -30,7 +30,7 @@ export function SignUpForm() {
     >
       <VStack space="xl">
         <VStack space="xs">
-          <Text color="$text500" lineHeight="$xs">
+          <Text color="$textDark500" lineHeight="$xs">
             Логин
           </Text>
           <Input>
@@ -38,7 +38,7 @@ export function SignUpForm() {
           </Input>
         </VStack>
         <VStack space="xs">
-          <Text color="$text500" lineHeight="$xs">
+          <Text color="$textDark500" lineHeight="$xs">
             Пароль
           </Text>
           <Input>
@@ -46,7 +46,7 @@ export function SignUpForm() {
           </Input>
         </VStack>
         <VStack space="xs">
-          <Text color="$text500" lineHeight="$xs">
+          <Text color="$textDark500" lineHeight="$xs">
             Подтверждение пароля
           </Text>
           <Input>

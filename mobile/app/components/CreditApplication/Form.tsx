@@ -54,11 +54,11 @@ export function CreditRequestForm() {
         }}
       >
         <VStack space="xl">
-          <Heading color="$text900" lineHeight="$md">
+          <Heading color="$textDark900" lineHeight="$md">
             Обработка заявки
           </Heading>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Возраст
             </Text>
             <Input>
@@ -71,7 +71,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Должность
             </Text>
             <Input>
@@ -85,7 +85,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Доход за год
             </Text>
             <Input>
@@ -98,7 +98,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Ежемесячный доход после уплаты налогов
             </Text>
             <Input>
@@ -111,7 +111,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Кол-во банковских счетов
             </Text>
             <Input>
@@ -124,7 +124,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Кол-во действующих кредитов
             </Text>
             <Input>
@@ -137,7 +137,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Возраст кредитной истории
             </Text>
             <Input>
@@ -150,7 +150,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Потребительское поведение
             </Text>
             <Input>
@@ -164,7 +164,7 @@ export function CreditRequestForm() {
             </Input>
           </VStack>
           <VStack space="xs">
-            <Text color="$text500" lineHeight="$xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Среднемесячный баланс
             </Text>
             <Input>
