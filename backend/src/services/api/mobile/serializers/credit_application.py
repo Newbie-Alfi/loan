@@ -28,9 +28,12 @@ class CreditApplicationSerializer(serializers.ModelSerializer):
             "amount_invested_monthly",
             "payment_behaviour",
             "monthly_balance",
+            "allow_credit",
         ]
 
     def save(self, **kwargs):
+        self.validated_data.pop("allow_credit", "")
+
         self.validated_data["annual_income"] = str(self.validated_data["annual_income"])
         self.validated_data["monthly_inhand_salary"] = str(self.validated_data["monthly_inhand_salary"])
         self.validated_data["amount_invested_monthly"] = str(self.validated_data["amount_invested_monthly"])
