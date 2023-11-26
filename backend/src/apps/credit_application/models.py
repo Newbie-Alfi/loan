@@ -32,3 +32,4 @@ class CreditApplication(models.Model):
     )
     monthly_balance = models.DecimalField(max_digits=12, decimal_places=2)
     allow_credit = models.BooleanField(default=None, blank=True, null=True)  # конечный вердикт: 0 - хороший клиент (одобрение кредита), 1 - плохой (отказ)
+    credit_score = models.DecimalField(max_digits=3, decimal_places=2, default=None, blank=True, null=True)
