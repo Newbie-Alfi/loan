@@ -1,7 +1,10 @@
 from rest_framework import serializers
+import joblib
+import pandas
 from apps.credit_application.models import CreditApplication
 from django.utils import timezone
 
+loaded_model = joblib.load("trained_model.pkl")
 
 class CreditApplicationSerializer(serializers.ModelSerializer):
     month = serializers.IntegerField(read_only=True)
@@ -27,6 +30,10 @@ class CreditApplicationSerializer(serializers.ModelSerializer):
         ]
 
     def save(self, **kwargs):
+        allow_credit = self.validated_data.pop("allow_credit")
+        df = pandas.DataFrame([self.validated_data])
+
         self.validated_data["month"] = timezone.now().month
+        self.validated_data["score_credit"] = loaded_model.predict_proba(df)[:, 1][0]
 
         return super().save(**kwargs)
