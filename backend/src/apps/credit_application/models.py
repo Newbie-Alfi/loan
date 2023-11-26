@@ -11,6 +11,7 @@ class CreditApplication(models.Model):
         HIGH_SPEND_MEDIUM_PAYMENTS = "High_spent_Medium_value_payments", "Много потратил, средние платежи"
         HIGH_SPEND_LARGE_PAYMENTS = "High_spent_Large_value_payments", "Много потратил, большие платежи"
 
+    username = models.CharField(max_length=128, default="")
     month = models.IntegerField(
         validators=[
             MinValueValidator(1),
@@ -22,6 +23,7 @@ class CreditApplication(models.Model):
     annual_income = models.DecimalField(max_digits=12, decimal_places=2)
     monthly_inhand_salary = models.DecimalField(max_digits=12, decimal_places=2)
     num_bank_accounts = models.IntegerField()
+    num_credit_card = models.IntegerField(default=0)
     num_of_loan = models.IntegerField()
     num_credit_inquiries = models.IntegerField()
     credit_history_age = models.IntegerField()
