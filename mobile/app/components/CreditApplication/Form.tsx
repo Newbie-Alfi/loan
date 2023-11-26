@@ -14,6 +14,18 @@ import {
   ToastTitle,
   ToastDescription,
   Toast,
+  Select,
+  SelectTrigger,
+  SelectInput,
+  SelectIcon,
+  Icon,
+  SelectPortal,
+  SelectDragIndicator,
+  SelectDragIndicatorWrapper,
+  SelectContent,
+  SelectBackdrop,
+  ChevronDownIcon,
+  SelectItem,
 } from "@gluestack-ui/themed";
 
 import { ACTION_TYPE, PAYMENT_BEHAVIOR, State, reducer } from "./reducer";
@@ -22,16 +34,17 @@ import { api } from "../../../api";
 
 const DEFAULT_VALUE: State = {
   age: 18,
-  annual_income: 0,
+  annual_income: 12000,
   occupation: "",
-  monthly_inhand_salary: 0,
-  amount_invested_monthly: 0,
-  num_bank_accounts: 0,
+  monthly_inhand_salary: 1000,
+  amount_invested_monthly: 1000,
+  num_bank_accounts: 2,
+  num_credit_card: 1,
   num_of_loan: 0,
-  num_credit_inquiries: 0,
-  credit_history_age: 0,
+  num_credit_inquiries: 1,
+  credit_history_age: 4,
   payment_behaviour: PAYMENT_BEHAVIOR.LOW_SPEND_LARGE_PAYMENTS,
-  monthly_balance: 0,
+  monthly_balance: 100,
 };
 
 export function CreditRequestForm() {
@@ -118,6 +131,7 @@ export function CreditRequestForm() {
             <Input>
               <InputField
                 type="text"
+                placeholder="Учитель"
                 value={state.occupation}
                 onChangeText={(v) => {
                   dispatch({ type: ACTION_TYPE.OCCUPATION, payload: v });
@@ -127,7 +141,7 @@ export function CreditRequestForm() {
           </VStack>
           <VStack space="xs">
             <Text color="$textDark500" lineHeight="$xs">
-              Доход за год
+              Доход за год, $
             </Text>
             <Input>
               <InputNumber
@@ -140,13 +154,16 @@ export function CreditRequestForm() {
           </VStack>
           <VStack space="xs">
             <Text color="$textDark500" lineHeight="$xs">
-              Ежемесячный доход после уплаты налогов
+              Ежемесячный доход после уплаты налогов, $
             </Text>
             <Input>
               <InputNumber
-                value={state.monthly_balance}
+                value={state.monthly_inhand_salary}
                 onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.MONTHLY_BALANCE, payload: v })
+                  dispatch({
+                    type: ACTION_TYPE.MONTHLY_INHAND_SALARY,
+                    payload: v,
+                  })
                 }
               />
             </Input>
@@ -166,6 +183,19 @@ export function CreditRequestForm() {
           </VStack>
           <VStack space="xs">
             <Text color="$textDark500" lineHeight="$xs">
+              Кол-во действующий карт
+            </Text>
+            <Input>
+              <InputNumber
+                value={state.num_credit_card}
+                onChange={(v) =>
+                  dispatch({ type: ACTION_TYPE.NUM_CREDIT_CARD, payload: v })
+                }
+              />
+            </Input>
+          </VStack>
+          <VStack space="xs">
+            <Text color="$textDark500" lineHeight="$xs">
               Кол-во действующих кредитов
             </Text>
             <Input>
@@ -173,6 +203,22 @@ export function CreditRequestForm() {
                 value={state.num_of_loan}
                 onChange={(v) =>
                   dispatch({ type: ACTION_TYPE.NUM_OF_LOAN, payload: v })
+                }
+              />
+            </Input>
+          </VStack>
+          <VStack space="xs">
+            <Text color="$textDark500" lineHeight="$xs">
+              Кол-во запросов в бюро
+            </Text>
+            <Input>
+              <InputNumber
+                value={state.num_credit_inquiries}
+                onChange={(v) =>
+                  dispatch({
+                    type: ACTION_TYPE.NUM_CREDIT_INQUIRIES,
+                    payload: v,
+                  })
                 }
               />
             </Input>
@@ -192,21 +238,73 @@ export function CreditRequestForm() {
           </VStack>
           <VStack space="xs">
             <Text color="$textDark500" lineHeight="$xs">
-              Потребительское поведение
+              Сумма среднемесячных вложений, $
             </Text>
             <Input>
-              <InputField
-                type="text"
-                value={state.payment_behaviour}
-                onChangeText={(v) =>
-                  dispatch({ type: ACTION_TYPE.PAYMENT_BEHAVIOUR, payload: v })
+              <InputNumber
+                value={state.amount_invested_monthly}
+                onChange={(v) =>
+                  dispatch({
+                    type: ACTION_TYPE.AMOUNT_INVESTED_MONTHLY,
+                    payload: v,
+                  })
                 }
               />
             </Input>
           </VStack>
           <VStack space="xs">
             <Text color="$textDark500" lineHeight="$xs">
-              Среднемесячный баланс
+              Потребительское поведение
+            </Text>
+            <Select
+              defaultValue={"Мало потратил, большие платежи"}
+              onValueChange={(v) =>
+                dispatch({ type: ACTION_TYPE.PAYMENT_BEHAVIOUR, payload: v })
+              }
+            >
+              <SelectTrigger variant="outline" size="md">
+                <SelectInput />
+                <SelectIcon mr="$3">
+                  <Icon as={ChevronDownIcon} />
+                </SelectIcon>
+              </SelectTrigger>
+              <SelectPortal>
+                <SelectBackdrop />
+                <SelectContent>
+                  <SelectDragIndicatorWrapper>
+                    <SelectDragIndicator />
+                  </SelectDragIndicatorWrapper>
+                  <SelectItem
+                    label="Мало потратил, малые платежи"
+                    value={PAYMENT_BEHAVIOR.LOW_SPEND_SMALL_PAYMENTS}
+                  />
+                  <SelectItem
+                    label="Мало потратил, средние платежи"
+                    value={PAYMENT_BEHAVIOR.LOW_SPEND_MEDIUM_PAYMENTS}
+                  />
+                  <SelectItem
+                    label="Мало потратил, большие платежи"
+                    value={PAYMENT_BEHAVIOR.LOW_SPEND_LARGE_PAYMENTS}
+                  />
+                  <SelectItem
+                    label="Много потратил, малые платежи"
+                    value={PAYMENT_BEHAVIOR.HIGH_SPEND_SMALL_PAYMENTS}
+                  />
+                  <SelectItem
+                    label="Много потратил, средние платежи"
+                    value={PAYMENT_BEHAVIOR.HIGH_SPEND_MEDIUM_PAYMENTS}
+                  />
+                  <SelectItem
+                    label="Много потратил, большие платежи"
+                    value={PAYMENT_BEHAVIOR.HIGH_SPEND_LARGE_PAYMENTS}
+                  />
+                </SelectContent>
+              </SelectPortal>
+            </Select>
+          </VStack>
+          <VStack space="xs">
+            <Text color="$textDark500" lineHeight="$xs">
+              Среднемесячный баланс, $
             </Text>
             <Input>
               <InputNumber

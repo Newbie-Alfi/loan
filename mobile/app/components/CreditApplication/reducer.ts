@@ -4,6 +4,7 @@ export interface State {
   occupation: string;
   monthly_inhand_salary: number;
   num_bank_accounts: number;
+  num_credit_card: number;
   amount_invested_monthly: number;
   num_of_loan: number;
   num_credit_inquiries: number;
@@ -18,11 +19,13 @@ export enum ACTION_TYPE {
   OCCUPATION = "OCCUPATION",
   MONTHLY_INHAND_SALARY = "MONTHLY_INHAND_SALARY",
   NUM_OF_LOAN = "NUM_OF_LOAN",
+  NUM_CREDIT_CARD = "NUM_CREDIT_CARD",
   NUM_BANK_ACCOUNTS = "NUM_BANK_ACCOUNTS",
   NUM_CREDIT_INQUIRIES = "NUM_CREDIT_INQUIRIES",
   CREDIT_HISTORY_AGE = "CREDIT_HISTORY_AGE",
   PAYMENT_BEHAVIOUR = "PAYMENT_BEHAVIOUR",
   MONTHLY_BALANCE = "MONTHLY_BALANCE",
+  AMOUNT_INVESTED_MONTHLY = "AMOUNT_INVESTED_MONTHLY",
 }
 
 export enum PAYMENT_BEHAVIOR {
@@ -58,6 +61,10 @@ interface setNumCredits {
   type: ACTION_TYPE.NUM_CREDIT_INQUIRIES;
   payload: number;
 }
+interface setNumCards {
+  type: ACTION_TYPE.NUM_CREDIT_CARD;
+  payload: number;
+}
 
 interface setHistoryAge {
   type: ACTION_TYPE.CREDIT_HISTORY_AGE;
@@ -78,6 +85,10 @@ interface setNumOfLoan {
   type: ACTION_TYPE.NUM_OF_LOAN;
   payload: number;
 }
+interface setAmountInvestedMonthy {
+  type: ACTION_TYPE.AMOUNT_INVESTED_MONTHLY;
+  payload: number;
+}
 
 interface setMounthyBalance {
   type: ACTION_TYPE.MONTHLY_BALANCE;
@@ -94,7 +105,9 @@ type Action =
   | setNumBankAccounts
   | setPaymentBehaviour
   | setNumOfLoan
-  | setHistoryAge;
+  | setHistoryAge
+  | setAmountInvestedMonthy
+  | setNumCards;
 
 export function reducer(state: State, action: Action): State {
   const { type, payload } = action;
@@ -125,8 +138,14 @@ export function reducer(state: State, action: Action): State {
     case ACTION_TYPE.NUM_OF_LOAN: {
       return { ...state, num_of_loan: payload };
     }
+    case ACTION_TYPE.NUM_CREDIT_CARD: {
+      return { ...state, num_credit_card: payload };
+    }
     case ACTION_TYPE.OCCUPATION: {
       return { ...state, occupation: payload };
+    }
+    case ACTION_TYPE.AMOUNT_INVESTED_MONTHLY: {
+      return { ...state, amount_invested_monthly: payload };
     }
     case ACTION_TYPE.PAYMENT_BEHAVIOUR: {
       if (
