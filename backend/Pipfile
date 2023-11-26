@@ -14,6 +14,7 @@ psycopg2-binary = "==2.9.9"
 joblib = "*"
 pandas = "*"
 scikit-learn = "*"
+matplotlib = "*"
 
 [dev-packages]
 redis = "*"
