@@ -11,6 +11,9 @@ celery = "==5.3.4"
 django-filter = "==23.3"
 pillow = "==10.1.0"
 psycopg2-binary = "==2.9.9"
+joblib = "*"
+pandas = "*"
+scikit-learn = "*"
 
 [dev-packages]
 redis = "*"
