@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button, ButtonText, Text, VStack, FormControl, InputField, Input } from "@gluestack-ui/themed";
 import { auth } from "../../../api/auth";
 import { useRouter } from "expo-router";
+import useAuth from "../../hooks/useAuth";
 
 export function SignUpForm() {
   const [username, setUsername] = useState<string>("");
@@ -11,6 +12,7 @@ export function SignUpForm() {
   const [loading, setLoading] = useState<boolean>(false);
 
   const router = useRouter();
+  const { setUsername: setUsernameToContext } = useAuth();
 
   async function onSubmit() {
     setLoading(true);
@@ -22,6 +24,7 @@ export function SignUpForm() {
       setEmail("");
       setPassword2("");
 
+      setUsernameToContext(username);
       setLoading(false);
       router.replace("/(tabs)");
     }

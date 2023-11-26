@@ -31,6 +31,7 @@ import {
 import { ACTION_TYPE, PAYMENT_BEHAVIOR, State, reducer } from "./reducer";
 import { InputNumber } from "../../../components/InputNumber";
 import { api } from "../../../api";
+import useAuth from "../../hooks/useAuth";
 
 const DEFAULT_VALUE: State = {
   age: 18,
@@ -48,26 +49,48 @@ const DEFAULT_VALUE: State = {
 };
 
 export function CreditRequestForm() {
+  const { username } = useAuth();
   const toast = useToast();
   const [state, dispatch] = useReducer(reducer, DEFAULT_VALUE);
 
   async function onSubmit() {
     try {
-      const response = await api.application.create(state);
+      const response = await api.application.create(state, username);
+      const allowCredit = response.data.allow_credit;
 
       toast.show({
         placement: "top",
         render: ({ id }) => {
-          return (
-            <Toast nativeID={"toast-" + id} action="attention" variant="solid">
-              <VStack space="xs">
-                <ToastTitle>Заявка отправлена</ToastTitle>
-                <ToastDescription>
-                  Следите за статусом заявки. Результат будет в ближайшее время
-                </ToastDescription>
-              </VStack>
-            </Toast>
-          );
+          if (allowCredit === true) {
+            return (
+              <Toast nativeID={"toast-" + id} action="attention" variant="solid">
+                <VStack space="xs">
+                  <ToastTitle>Заявка отправлена</ToastTitle>
+                  <ToastDescription>Кредит Одобрен</ToastDescription>
+                </VStack>
+              </Toast>
+            );
+          } else if (allowCredit === false) {
+            return (
+              <Toast nativeID={"toast-" + id} action="attention" variant="solid">
+                <VStack space="xs">
+                  <ToastTitle>Заявка отправлена</ToastTitle>
+                  <ToastDescription>Не одобрено</ToastDescription>
+                </VStack>
+              </Toast>
+            );
+          } else {
+            return (
+              <Toast nativeID={"toast-" + id} action="attention" variant="solid">
+                <VStack space="xs">
+                  <ToastTitle>Заявка отправлена</ToastTitle>
+                  <ToastDescription>
+                    На расмотрении. Следите за статусом заявки. Результат будет в ближайшее время
+                  </ToastDescription>
+                </VStack>
+              </Toast>
+            );
+          }
         },
       });
     } catch (e) {
@@ -78,9 +101,7 @@ export function CreditRequestForm() {
             <Toast nativeID={"toast-" + id} action="attention" variant="solid">
               <VStack space="xs">
                 <ToastTitle>Не удалось отправить заявку</ToastTitle>
-                <ToastDescription>
-                  {e instanceof Error ? e.message : "Неизвестная ошибка"}
-                </ToastDescription>
+                <ToastDescription>{e instanceof Error ? e.message : "Неизвестная ошибка"}</ToastDescription>
               </VStack>
             </Toast>
           );
@@ -118,9 +139,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.age}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.AGE, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.AGE, payload: v })}
               />
             </Input>
           </VStack>
@@ -146,9 +165,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.annual_income}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.ANNUAL_INCOME, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.ANNUAL_INCOME, payload: v })}
               />
             </Input>
           </VStack>
@@ -175,9 +192,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.num_bank_accounts}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.NUM_BANK_ACCOUNTS, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.NUM_BANK_ACCOUNTS, payload: v })}
               />
             </Input>
           </VStack>
@@ -188,9 +203,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.num_credit_card}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.NUM_CREDIT_CARD, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.NUM_CREDIT_CARD, payload: v })}
               />
             </Input>
           </VStack>
@@ -201,9 +214,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.num_of_loan}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.NUM_OF_LOAN, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.NUM_OF_LOAN, payload: v })}
               />
             </Input>
           </VStack>
@@ -230,9 +241,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.credit_history_age}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.CREDIT_HISTORY_AGE, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.CREDIT_HISTORY_AGE, payload: v })}
               />
             </Input>
           </VStack>
@@ -258,9 +267,7 @@ export function CreditRequestForm() {
             </Text>
             <Select
               defaultValue={"Мало потратил, большие платежи"}
-              onValueChange={(v) =>
-                dispatch({ type: ACTION_TYPE.PAYMENT_BEHAVIOUR, payload: v })
-              }
+              onValueChange={(v) => dispatch({ type: ACTION_TYPE.PAYMENT_BEHAVIOUR, payload: v })}
             >
               <SelectTrigger variant="outline" size="md">
                 <SelectInput />
@@ -309,9 +316,7 @@ export function CreditRequestForm() {
             <Input>
               <InputNumber
                 value={state.monthly_balance}
-                onChange={(v) =>
-                  dispatch({ type: ACTION_TYPE.MONTHLY_BALANCE, payload: v })
-                }
+                onChange={(v) => dispatch({ type: ACTION_TYPE.MONTHLY_BALANCE, payload: v })}
               />
             </Input>
           </VStack>
